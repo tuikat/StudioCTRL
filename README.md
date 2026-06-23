@@ -16,14 +16,13 @@ Built for the **Blackmagic Micro Studio Camera 4K G2**. Configure and switch bet
 
 ## Download
 
-Grab the latest installer for your platform from the [**Releases**](https://github.com/tuikat/StudioCTRL/releases) page:
+Grab the installer for your platform from the [**Releases**](https://github.com/tuikat/StudioCTRL/releases) page. One package per platform:
 
 | Platform | File |
 | --- | --- |
-| **Windows** | `.msi` or `.exe` (NSIS) |
-| **macOS** (Apple Silicon) | `StudioCTRL_*_aarch64.dmg` |
-| **macOS** (Intel) | `StudioCTRL_*_x64.dmg` |
-| **Linux** | `.AppImage` or `.deb` |
+| **Windows** | `StudioCTRL_*_x64-setup.exe` (NSIS installer) |
+| **macOS** (universal) | `StudioCTRL_*_universal.dmg` (Apple Silicon and Intel) |
+| **Linux** | `StudioCTRL_*_amd64.AppImage` |
 
 > The macOS and Windows builds are currently **unsigned**. On first launch you may need to allow the app through Gatekeeper (macOS: right click, then Open) or SmartScreen (Windows: *More info*, then *Run anyway*).
 

@@ -19,10 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # One package per platform: macOS universal .dmg, Linux .AppImage, Windows .exe
           - platform: macos-latest
-            args: --target aarch64-apple-darwin
-          - platform: macos-latest
-            args: --target x86_64-apple-darwin
+            args: --target universal-apple-darwin
           - platform: ubuntu-22.04
             args: ""
           - platform: windows-latest
@@ -69,10 +68,10 @@ jobs:
 
             Desktop controller for Blackmagic Micro Studio Camera 4K G2 (and other Blackmagic cameras with the Camera Control REST API).
 
-            ### Downloads
-            - **Windows**: `.msi` or `.exe` (NSIS) installer
-            - **macOS**: `.dmg` (separate Apple Silicon `aarch64` and Intel `x86_64` builds)
-            - **Linux**: `.AppImage` or `.deb`
+            ### Downloads (one package per platform)
+            - **Windows**: `.exe` installer (NSIS)
+            - **macOS**: universal `.dmg` (Apple Silicon and Intel in one)
+            - **Linux**: `.AppImage`
 
             > macOS/Windows builds are unsigned; you may need to bypass Gatekeeper/SmartScreen on first launch.
 
