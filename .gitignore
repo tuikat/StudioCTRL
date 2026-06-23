@@ -1,0 +1,20 @@
+# Node / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+.DS_Store
+
+# Tauri / Rust
+src-tauri/target/
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
