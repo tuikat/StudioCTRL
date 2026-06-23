@@ -111,8 +111,8 @@ export async function connect(id: number): Promise<void> {
       api.getSupportedISOs(cfg.host).catch(() => []),
       api.getSupportedGains(cfg.host).catch(() => []),
       api.getSupportedShutters(cfg.host).catch(() => []),
-      api.getRange(cfg.host, "control/api/v1/video/whiteBalance/description").catch(() => null),
-      api.getRange(cfg.host, "control/api/v1/video/whiteBalanceTint/description").catch(() => null),
+      api.getRange(cfg.host, "video/whiteBalance/description").catch(() => null),
+      api.getRange(cfg.host, "video/whiteBalanceTint/description").catch(() => null),
     ]);
     patchState(id, {
       supportedISOs: isos,

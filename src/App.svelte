@@ -8,6 +8,8 @@
   import ExposurePanel from "./lib/panels/ExposurePanel.svelte";
   import LensPanel from "./lib/panels/LensPanel.svelte";
   import ColorPanel from "./lib/panels/ColorPanel.svelte";
+  import LogPanel from "./lib/components/LogPanel.svelte";
+  import { logErrorCount } from "./lib/logstore";
   import {
     configs,
     selected,
@@ -21,6 +23,7 @@
   } from "./lib/cameras";
 
   let editId: number | null = null;
+  let showLogs = false;
 
   function onKey(e: KeyboardEvent) {
     const t = e.target as HTMLElement;
@@ -30,6 +33,8 @@
       selected.set(parseInt(e.key, 10));
     } else if (e.key.toLowerCase() === "l") {
       linkMode.update((v) => !v);
+    } else if (e.key === "`") {
+      showLogs = !showLogs;
     }
   }
 
@@ -94,12 +99,19 @@
   </div>
 
   <footer class="statusbar">
-    <span class="hint mono">keys 1-{SLOT_COUNT}: switch camera · L: link all</span>
-    <span class="hint">
+    <span class="hint mono">keys 1-{SLOT_COUNT}: switch camera · L: link all · `: logs</span>
+    <span class="hint right">
       {$configs.filter((c) => c.host).length} configured ·
       <span class="link-state" class:on={$linkMode}>{$linkMode ? "LINK MODE" : "single"}</span>
+      <button class="logbtn" class:active={showLogs} on:click={() => (showLogs = !showLogs)} type="button">
+        Logs{#if $logErrorCount > 0}<span class="errbadge">{$logErrorCount}</span>{/if}
+      </button>
     </span>
   </footer>
+
+  {#if showLogs}
+    <LogPanel on:close={() => (showLogs = false)} />
+  {/if}
 </div>
 
 {#if editId !== null}
@@ -233,6 +245,40 @@
   .link-state.on {
     color: var(--accent);
     font-weight: 600;
+  }
+  .statusbar .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-size: 11px;
+    padding: 3px 9px;
+  }
+  .logbtn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .logbtn.active {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+  .errbadge {
+    background: var(--rec);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 9px;
+    padding: 0 6px;
+    font-size: 10px;
+    min-width: 16px;
+    text-align: center;
   }
   @media (max-width: 900px) {
     .panels {

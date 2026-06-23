@@ -8,6 +8,7 @@
 
 import { invoke } from "@tauri-apps/api/core";
 import type { ApiResponse, ColorWheelValue } from "./types";
+import { addLog } from "./logstore";
 
 const API_BASE = "control/api/v1";
 
@@ -17,12 +18,42 @@ async function request(
   path: string,
   body?: unknown,
 ): Promise<ApiResponse> {
-  return invoke<ApiResponse>("camera_request", {
-    host,
-    method,
-    path: `${API_BASE}/${path}`,
-    body: body ?? null,
-  });
+  const t0 = performance.now();
+  try {
+    const res = await invoke<ApiResponse>("camera_request", {
+      host,
+      method,
+      path: `${API_BASE}/${path}`,
+      body: body ?? null,
+    });
+    // Log every write/action and any failure; skip the noisy successful polls.
+    if (method !== "GET" || !res.ok) {
+      addLog({
+        host,
+        method,
+        path,
+        status: res.status,
+        ok: res.ok,
+        ms: Math.round(performance.now() - t0),
+        reqBody: body ?? null,
+        resBody: res.body,
+      });
+    }
+    return res;
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    addLog({
+      host,
+      method,
+      path,
+      status: 0,
+      ok: false,
+      ms: Math.round(performance.now() - t0),
+      reqBody: body ?? null,
+      error,
+    });
+    return { status: 0, ok: false, body: null };
+  }
 }
 
 export const get = (host: string, path: string) => request(host, "GET", path);

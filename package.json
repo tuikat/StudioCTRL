@@ -1,6 +1,6 @@
 {
   "name": "studioctrl",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "StudioCTRL: a fast, beautiful desktop controller for Blackmagic Micro Studio Camera 4K G2 (and other REST-API cameras). Control up to 8 cameras over the network.",
   "type": "module",
   "license": "PolyForm-Noncommercial-1.0.0",

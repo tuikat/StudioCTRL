@@ -1,6 +1,6 @@
 [package]
 name = "studioctrl"
-version = "0.1.0"
+version = "0.1.1"
 description = "Fast, beautiful desktop controller for Blackmagic Micro Studio Camera 4K G2"
 authors = ["tuikat"]
 license = "PolyForm-Noncommercial-1.0.0"
